@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
@@ -19,11 +18,16 @@ import java.util.ArrayList;
                     }
                     break;
                 case 2:
-                    int firstNumber = romanToArabic (listString.getFirst());
-                    int secondNumber = romanToArabic (listString.getLast());
-                    char sign = extractArithmeticSign(input);
-                    String expresion = Integer.toString(firstNumber) +" "+  sign +" "+ Integer.toString(secondNumber);
-                    System.out.println(arabicToRoman(Calculate(expresion, 2)));
+                    try {
+                        int firstNumber = romanToArabic (listString.getFirst());
+                        int secondNumber = romanToArabic (listString.getLast());
+                        char sign = extractArithmeticSign(input);
+                        String expresion = Integer.toString(firstNumber) +" "+  sign +" "+ Integer.toString(secondNumber);
+                        System.out.println(arabicToRoman(Calculate(expresion, 2)));
+                    }
+                    catch(IllegalArgumentException ex) {
+                        System.out.println("throws Exception");
+                    }
                     break;
                 case 3:
                     try {
@@ -60,7 +64,7 @@ import java.util.ArrayList;
                 return matcher.group().charAt(0);
             } else {
 
-                return '+';
+                throw new IllegalArgumentException();
             }
         }
         public static int romanToArabic(String romanNumber) {
@@ -99,7 +103,7 @@ import java.util.ArrayList;
                 if (!str.matches("^\\d+$")) {
                     isAllIntegers = false;
                 }
-                if (!str.matches("[IVXLCDMivxlcdm]+")) {
+                if (!str.matches("[IVXLCDM]+")) {
                     isAllRomanNumerals = false;
                 }
             }
